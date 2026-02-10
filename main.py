@@ -33,3 +33,25 @@ selected_class = [0,2]
 results = model.predict(source=path, classes=selected_class, save=True, conf = 0.7)
 results[0].show()
 results[0].save(filename="result.jpg")
+########################################################
+
+import cv2
+
+def process_video(path: str):
+    vs = cv2.VideoCapture(path)
+    model = YOLO("model/yolov8x.pt")
+
+    while True:
+        (grabbed, frame) = vs.read()
+        if not grabbed:
+            break
+        results = model.predict(frame, stream=False)
+        detection_classes = results[0].names
+        # results[0].show()
+        for result in results:
+            for data in result.boxes.data.tolist():
+                # print(data)
+                code = data[5]
+                draw_box(data=data, image=frame, name=detection_classes[code])
+        cv2.imshow("Frame", frame)
+        cv2.waitKey(1)
