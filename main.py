@@ -65,3 +65,5 @@ def process_video(path: str):
             return image
 
         process_video(path='images/traffic.mp4')
+
+        # endregion
