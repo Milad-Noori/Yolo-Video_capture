@@ -55,3 +55,13 @@ def process_video(path: str):
                 draw_box(data=data, image=frame, name=detection_classes[code])
         cv2.imshow("Frame", frame)
         cv2.waitKey(1)
+
+        def draw_box(data, image, name):
+            (x1, y1, x2, y2, confidence, code) = data
+            p1 = (int(x1), int(y1))
+            p2 = (int(x2), int(y2))
+            cv2.rectangle(image, p1, p2, (0, 0, 255), 3)
+            cv2.putText(image, name, p1, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+            return image
+
+        process_video(path='images/traffic.mp4')
